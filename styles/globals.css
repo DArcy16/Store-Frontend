@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary : #2d2d2d;
+  --secondary : #353535;
+}
+
+* {
+  margin : 0;
+  padding : 0;
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  font-family : 'Quicksand', sans-sarif;
+  background-color: #f1f1f1;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size : 1.2rem;
+  color : var(--primary);
+}
+
+h3 {
+  font-size: 1rem;
+  color: var(--primary);
+}
