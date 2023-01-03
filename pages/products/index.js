@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { useQuery } from 'urql';
 import styled from 'styled-components';
 
-const index = () => {
+const Index = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [results, reexecuteQuery] = useQuery({
          query: GET_PRODUCTS,
@@ -72,7 +72,7 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
 
 const ProductGallery = styled.div`
   display: grid;

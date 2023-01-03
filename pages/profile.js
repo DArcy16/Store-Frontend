@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 export const getServerSideProps = withPageAuthRequired();
 
-const profile = ({ user }) => {
+const Profile = ({ user }) => {
     const router = useRouter();
 
   return (
@@ -22,4 +22,4 @@ const profile = ({ user }) => {
   )
 }
 
-export default profile
+export default Profile

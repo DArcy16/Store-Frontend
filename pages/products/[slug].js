@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SINGLE_PRODUCT } from "../../graphql/query";
 import { useRouter } from "next/router";
 import { useQuery } from "urql";
+import { toast } from "react-hot-toast";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import styled from "styled-components";
 import Image from "next/image";
@@ -32,6 +33,11 @@ const ProductDetails = () => {
   const { title, description, image, slug } = product;
   const { url, width, height } = image.data.attributes.formats.medium;
 
+  function handleAddToCart() {
+    handleOnAdd(product, productQuantity);
+    toast.success(`${title} added to cart!`, { duration : 1500})
+  }
+
   return (
     <ProductDetailsStyled>
       {/* For Using With Cloudinary */}
@@ -54,7 +60,9 @@ const ProductDetails = () => {
           </button>
         </Quantity>
 
-        <CartButtonStyled onClick={() => handleOnAdd(product, productQuantity)}>
+        <CartButtonStyled 
+        onClick={() => handleAddToCart()}
+>
             Add to Cart
         </CartButtonStyled>
       </ProductInfo>

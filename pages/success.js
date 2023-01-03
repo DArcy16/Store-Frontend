@@ -11,7 +11,7 @@ export async function getServerSideProps(params) {
     }
 }
 
-const success = ({ order }) => {
+const Success = ({ order }) => {
     const router = useRouter();
     console.log(order);
   return (
@@ -50,4 +50,4 @@ const success = ({ order }) => {
   )
 }
 
-export default success
+export default Success
