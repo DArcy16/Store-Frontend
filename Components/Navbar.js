@@ -1,21 +1,27 @@
 import Link from "next/link";
 import React from "react";
-import { FiShoppingBag } from "react-icons/fi";
+import { HiShoppingBag } from "react-icons/hi2";
 import styled from "styled-components";
 import { useStoreContext } from "../lib/contex";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import Cart from "./Cart";
+import UserMenuItem from "./UserMenuItem";
 
 const Navbar = () => {
   const { showCart, setShowCart, totalQuantity } = useStoreContext();
   return (
-    <NavStyled>
+    <NavStyled className="container mx-auto">
       <Link href="/">Y.E.C Store</Link>
       <NavItems>
-        <li onClick={() => setShowCart(true)}>
-          {totalQuantity > 0 ? <span>{totalQuantity}</span> : null}
-          <FiShoppingBag />
+        <UserMenuItem />
+        <li onClick={() => setShowCart(true)} >
+          {totalQuantity > 0 ? 
+          <motion.span initial={{scale: 0}}
+          animate ={{scale: 1}}>
+            {totalQuantity}
+          </motion.span> : null}
+          <HiShoppingBag />
           <h3>Cart</h3>
         </li>
       </NavItems>

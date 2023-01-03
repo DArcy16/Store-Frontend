@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { SINGLE_PRODUCT } from "../../graphql/query";
 import { useRouter } from "next/router";
 import { useQuery } from "urql";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import styled from "styled-components";
+import Image from "next/image";
 import { useStoreContext } from "../../lib/contex";
 
 const ProductDetails = () => {
+  const [productQuantity, setProductQuantity] = useState(1);
   const { query } = useRouter();
-  const { productQuantity, cartItems, increaseQty, decreaseQty, handleOnAdd } =
+  const {  cartItems, handleOnAdd } =
     useStoreContext();
+    function increaseQty() {
+    setProductQuantity((prevState) => prevState + 1);
+  }
+
+  function decreaseQty() {
+    setProductQuantity((prevState) => prevState - 1);
+  }
 
   const [results] = useQuery({
     query: SINGLE_PRODUCT,
@@ -27,7 +36,8 @@ const ProductDetails = () => {
     <ProductDetailsStyled>
       {/* For Using With Cloudinary */}
       {/* <Image src={url} alt={title} width={width} height={height} /> */}
-      <img src={url} alt={title} />
+      {/* <img src={url} alt={title} /> */}
+      <Image src={url} alt={title} width={width} height={height} />
 
       <ProductInfo>
         <h3>{title}</h3>
@@ -54,7 +64,7 @@ const ProductDetails = () => {
 
 export default ProductDetails;
 
-const ProductDetailsStyled = styled.div`
+const ProductDetailsStyled = styled.main`
   display: flex;
   justify-content: space-between;
   margin-top: 5rem;

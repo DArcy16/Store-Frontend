@@ -5,10 +5,24 @@ import { FaShoppingCart } from "react-icons/fa";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import styled from "styled-components";
 const { motion } = require("framer-motion");
+import connectStripe from "lib/connectStripe";
 
 const Cart = () => {
   const { setShowCart, cartItems, handleOnAdd, handleOnRemove, totalPrice } =
     useStoreContext();
+
+    const handleCheckout = async () => {
+    const stripe = await connectStripe();
+    const res = await fetch('/api/stripe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cartItems),
+    });
+    const data = await res.json();
+    console.log(data);
+    await stripe.redirectToCheckout({ sessionId: data.id });
+  };
+
   return (
     <CartWrapper
       as={motion.div}
@@ -18,6 +32,7 @@ const Cart = () => {
       onClick={() => setShowCart(false)}
     >
       <CartStyled
+        layout
         as={motion.div}
         initial={{ x: "50%" }}
         animate={{ x: 0 }}
@@ -37,12 +52,13 @@ const Cart = () => {
           </EmptyStyled>
         ) : null}
         {cartItems.length >= 1
-          ? cartItems.map((item) => (
+          ? cartItems.map((item , index) => (
               <Card
+                layout
                 as={motion.div}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.4 * index}}
                 key={item.slug}
               >
                 <img
@@ -67,9 +83,11 @@ const Cart = () => {
             ))
           : null}
         {cartItems.length > 0 ? (
-          <Checkout>
+          <Checkout
+          layout
+          >
             <h3>SubTotal : {totalPrice} $</h3>
-            <ButtonStyled> Purchase </ButtonStyled>
+            <ButtonStyled onClick={() => handleCheckout()}> Purchase </ButtonStyled>
           </Checkout>
         ) : null}
       </CartStyled>
